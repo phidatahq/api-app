@@ -42,8 +42,8 @@ numpy==1.24.3
 oauthlib==3.2.2
 packaging==23.1
 pathspec==0.11.1
-phidata==1.6.2
-phiterm==1.6.2
+phidata==1.6.3
+phiterm==1.6.3
 platformdirs==3.5.0
 pluggy==1.0.0
 pre-commit==3.3.1

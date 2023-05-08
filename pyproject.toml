@@ -19,7 +19,7 @@ dependencies = [
   # Linting
   "ruff",
   # Phidata
-  "phidata==1.6.2",
+  "phidata==1.6.3",
   # Libraries for Api server
   "alembic",
   "fastapi",
@@ -50,9 +50,6 @@ exclude = [
   "db/migrations/*",
 ]
 
-[tool.ruff.per-file-ignores]
-"__init__.py" = ["F401"]
-
 [tool.mypy]
 plugins = [
   "pydantic.mypy",
@@ -67,11 +64,7 @@ exclude = [
 
 [[tool.mypy.overrides]]
 module = [
-  "alembic.*",
-  "celery.*",
   "phidata.*",
-  "pyarrow.*",
   "setuptools.*",
-  "sqlalchemy.*",
 ]
 ignore_missing_imports = true
