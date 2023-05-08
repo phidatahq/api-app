@@ -28,7 +28,7 @@ prd_image = DockerImage(
 
 # -*- RDS Database Subnet Group
 prd_db_subnet_group = DbSubnetGroup(
-    name=f"{ws_settings.prd_key}-db-sg",
+    name="db-prd-sg",
     enabled=ws_settings.prd_db_enabled,
     subnet_ids=ws_settings.subnet_ids,
     skip_create=skip_create,
@@ -38,7 +38,7 @@ prd_db_subnet_group = DbSubnetGroup(
 # -*- RDS Database Instance
 db_engine = "mysql"
 prd_db = DbInstance(
-    name=f"{ws_settings.prd_key}-db",
+    name="db-prd",
     enabled=ws_settings.prd_db_enabled,
     db_name="prd",
     engine=db_engine,
@@ -62,7 +62,7 @@ prd_db = DbInstance(
 # -*- FastApiServer running on ECS
 launch_type = "FARGATE"
 prd_fastapi = FastApiServer(
-    name=ws_settings.prd_key,
+    name="api-prd",
     enabled=ws_settings.prd_api_enabled,
     image=prd_image,
     command=["api", "start"],

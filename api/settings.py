@@ -25,6 +25,10 @@ class ApiSettings(BaseSettings):
     # Host and port to run the api server on.
     host: str = "0.0.0.0"
     port: int = 9090
+    # Create tables on startup
+    create_tables: bool = False
+    # Upgrade database on startup using alembic
+    upgrade_db: bool = False
 
     # Database configuration
     db_host: Optional[str]

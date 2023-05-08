@@ -9,7 +9,7 @@ from db.session import get_db
 ## Router for Users
 ######################################################
 
-users_router = APIRouter(prefix=endpoints.USERS, tags=["User Operations"])
+users_router = APIRouter(prefix=endpoints.USERS, tags=["User CRUD"])
 
 
 def get_user(db: Session, user_id: int):
@@ -24,7 +24,7 @@ def get_users(db: Session, skip: int = 0, limit: int = 100):
     return db.query(tables.Users).offset(skip).limit(limit).all()
 
 
-def create_db_user(db: Session, user: schemas.UserCreate):
+def create_user_in_db(db: Session, user: schemas.UserCreate):
     db_user = tables.Users(email=user.email)
     db.add(db_user)
     db.commit()
@@ -32,20 +32,12 @@ def create_db_user(db: Session, user: schemas.UserCreate):
     return db_user
 
 
-def create_user_item(db: Session, item: schemas.ItemCreate, user_id: int):
-    db_item = tables.Items(**item.dict(), owner_id=user_id)
-    db.add(db_item)
-    db.commit()
-    db.refresh(db_item)
-    return db_item
-
-
 @users_router.post("/users/", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = get_user_by_email(db, email=user.email)
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
-    return create_db_user(db=db, user=user)
+    return create_user_in_db(db=db, user=user)
 
 
 @users_router.get("/users/", response_model=list[schemas.User])
@@ -60,10 +52,3 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
-
-
-@users_router.post("/users/{user_id}/items/", response_model=schemas.Item)
-def create_item_for_user(
-    user_id: int, item: schemas.ItemCreate, db: Session = Depends(get_db)
-):
-    return create_user_item(db=db, item=item, user_id=user_id)

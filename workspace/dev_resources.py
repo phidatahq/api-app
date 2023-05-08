@@ -24,7 +24,7 @@ dev_image = DockerImage(
 
 # -*- MySQL database
 dev_db = MySQLDb(
-    name=f"{ws_settings.dev_key}-db",
+    name="db-dev",
     enabled=ws_settings.dev_db_enabled,
     mysql_database="dev",
     mysql_root_password=ws_settings.ws_name,
@@ -34,7 +34,7 @@ dev_db = MySQLDb(
 
 # -*- FastApiServer running on port 9090
 dev_fastapi = FastApiServer(
-    name=ws_settings.dev_key,
+    name="api-dev",
     enabled=ws_settings.dev_api_enabled,
     image=dev_image,
     command="api start -r",
@@ -46,10 +46,12 @@ dev_fastapi = FastApiServer(
         "DB_USER": dev_db.get_db_user(),
         "DB_PASS": dev_db.get_db_password(),
         "DB_SCHEMA": dev_db.get_db_schema(),
-        # Upgrade database on startup
+        # Create tables on startup, do not use with UPGRADE_DB
+        "CREATE_TABLES": True,
+        # Upgrade database on startup using alembic
         # "UPGRADE_DB": True,
         # Wait for database to be available before starting the server
-        # "WAIT_FOR_DB": True,
+        "WAIT_FOR_DB": True,
     },
     mount_workspace=True,
     use_cache=ws_settings.use_cache,

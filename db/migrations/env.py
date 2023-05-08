@@ -5,7 +5,7 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from db.tables import BaseTable
+from db.tables import Base
 from api.settings import api_settings
 
 # this is the Alembic Config object, which provides
@@ -18,7 +18,7 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 config.set_main_option("sqlalchemy.url", api_settings.get_db_uri())
-target_metadata = BaseTable.metadata
+target_metadata = Base.metadata
 
 
 def run_migrations_offline() -> None:

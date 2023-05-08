@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from api.settings import api_settings
 from api.routes.v1_routes import v1_router
+from utils.log import logger
 
 
 # Create FastAPI App
@@ -27,3 +28,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+if api_settings.create_tables:
+    # Create tables in database
+    from db.tables import Base
+    from db.session import db_engine
+
+    Base.metadata.create_all(bind=db_engine)
+    logger.info("Created tables")

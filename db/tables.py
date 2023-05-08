@@ -1,30 +1,21 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
-from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
-
-# The function declarative_base() returns a class which is used to create database tables
-# https://fastapi.tiangolo.com/tutorial/sql-databases/#create-a-base-class
-BaseTable = declarative_base()  # type: ignore
+from sqlalchemy import Boolean, Column, Integer, String
+from sqlalchemy.orm import DeclarativeBase
 
 
-class Users(BaseTable):
+class Base(DeclarativeBase):
+    """
+    Base class for SQLAlchemy model definitions.
+
+    https://fastapi.tiangolo.com/tutorial/sql-databases/#create-a-base-class
+    https://docs.sqlalchemy.org/en/20/orm/mapping_api.html#sqlalchemy.orm.DeclarativeBase
+    """
+
+    pass
+
+
+class Users(Base):
     __tablename__ = "users"
 
-    id = Column(
-        Integer, primary_key=True, autoincrement=True, nullable=False, index=True
-    )
-    email = Column(String, unique=True, index=True)
+    id = Column(Integer, primary_key=True, autoincrement=True, index=True)
+    email = Column(String(256), unique=True)
     is_active = Column(Boolean, default=True)
-
-    items = relationship("Item", back_populates="owner")  # type: ignore
-
-
-class Items(BaseTable):
-    __tablename__ = "items"
-
-    id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, index=True)
-    description = Column(String, index=True)
-    owner_id = Column(Integer, ForeignKey("users.id"))
-
-    owner = relationship("User", back_populates="items")  # type: ignore
