@@ -1,14 +1,25 @@
 ## Running Database Migrations
 
-## Initialize Database
+## Creating database revision using alembic
 
-WARNING: RUN THIS IN ONLY IN DEVELOPMENT
+Run these commands lcoally to create a new database revision.
 
-```shell
-docker exec -it api-app-container zsh
+```bash
+docker exec -it api-dev-container zsh
 
-# cd db
-# alembic init migration
 alembic -c db/alembic.ini revision --autogenerate -m "Initialize DB"
 alembic -c db/alembic.ini upgrade head
+```
+
+Then set `UPGRADE_DB = True` which will run `alembic -c db/alembic.ini upgrade head` from the entrypoint script in production.
+
+## How the migrations directory was created
+
+> This has already been run to create the migrations directory
+
+```bash
+docker exec -it api-dev-container zsh
+
+cd db
+alembic init migration
 ```

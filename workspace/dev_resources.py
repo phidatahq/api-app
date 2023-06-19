@@ -24,6 +24,7 @@ dev_image = DockerImage(
 dev_db = PostgresDb(
     name=f"{ws_settings.dev_key}-db",
     enabled=ws_settings.dev_db_enabled,
+    db_schema="dev",
     # Connect to this db on port 9315
     container_host_port=9315,
     # Read POSTGRES_USER and POSTGRES_PASSWORD from secrets/dev_db_secrets.yml
