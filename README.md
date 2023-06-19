@@ -1,6 +1,6 @@
-## FastApi App
+## Api App
 
-This repo contains the code for running a FastApi App in 2 environments:
+This repo contains the code for running a Api App in 2 environments:
 
 1. dev: A development env running on docker
 2. prd: A production env running on AWS ECS

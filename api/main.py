@@ -3,7 +3,6 @@ from starlette.middleware.cors import CORSMiddleware
 
 from api.settings import api_settings
 from api.routes.v1_router import v1_router
-from utils.log import logger
 
 
 def create_app() -> FastAPI:
@@ -36,13 +35,6 @@ def create_app() -> FastAPI:
 
     return app
 
+
 # Create FastAPI app
 app = create_app()
-
-if api_settings.create_tables:
-    # Create tables in database
-    from db.tables import Base
-    from db.session import db_engine
-
-    Base.metadata.create_all(bind=db_engine)
-    logger.info("Created tables")

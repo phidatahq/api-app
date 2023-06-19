@@ -1,2 +1,5 @@
-# ignore secrets directory
+# ignore outputs
+output
+
+# ignore secrets
 secrets

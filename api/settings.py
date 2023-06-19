@@ -25,25 +25,22 @@ class ApiSettings(BaseSettings):
     # Host and port to run the api server on.
     host: str = "0.0.0.0"
     port: int = 9090
-    # Create tables on startup
-    create_tables: bool = False
-    # Upgrade database on startup using alembic
+    # Create/Upgrade database on startup using alembic
     upgrade_db: bool = False
 
     # Database configuration
-    db_host: Optional[str]
-    db_port: Optional[str]
-    db_user: Optional[str]
-    db_pass: Optional[str]
-    db_schema: Optional[str]
-    db_driver: str = "mysql+mysqlconnector"
+    db_host: Optional[str] = None
+    db_port: Optional[str] = None
+    db_user: Optional[str] = None
+    db_pass: Optional[str] = None
+    db_schema: Optional[str] = None
+    db_driver: str = "postgresql+psycopg"
 
     # Cors origin list to allow requests from.
-    cors_origin_list: List[str] = [
-        "http://localhost",
-        "http://localhost:3000",  # React dev server
-        "http://localhost:9095",  # Streamlit dev server
-    ]
+    # This list is set using the set_cors_origin_list validator
+    # which uses the runtime_env variable to set the
+    # default cors origin list.
+    cors_origin_list: Optional[List[str]] = None
 
     def get_db_uri(self) -> str:
         uri = "{}://{}{}@{}:{}/{}".format(
@@ -68,6 +65,17 @@ class ApiSettings(BaseSettings):
             raise ValueError(f"Invalid runtime_env: {runtime_env}")
 
         return runtime_env
+
+    @validator("cors_origin_list", always=True)
+    def set_cors_origin_list(cls, cors_origin_list, values):
+        valid_cors = cors_origin_list or []
+
+        runtime_env = values.get("runtime_env")
+        if runtime_env == "dev":
+            # 3000 is the default port for create-react-app
+            valid_cors.extend(["http://localhost", "http://localhost:3000"])
+
+        return valid_cors
 
     @validator("docs_enabled")
     def validate_docs_enabled(cls, docs_enabled, values):

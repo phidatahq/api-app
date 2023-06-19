@@ -5,11 +5,8 @@ from api.routes.endpoints import endpoints
 from db import tables, schemas
 from db.session import get_db
 
-######################################################
-## Router for Users
-######################################################
-
-users_router = APIRouter(prefix=endpoints.USERS, tags=["User CRUD"])
+# -*- Create a FastAPI router for user endpoints
+users_router = APIRouter(prefix=endpoints.USERS, tags=["Users"])
 
 
 def get_user(db: Session, user_id: int):
@@ -32,7 +29,7 @@ def create_user_in_db(db: Session, user: schemas.UserCreate):
     return db_user
 
 
-@users_router.post("/users/", response_model=schemas.User)
+@users_router.post("/create", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = get_user_by_email(db, email=user.email)
     if db_user:
@@ -40,13 +37,13 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return create_user_in_db(db=db, user=user)
 
 
-@users_router.get("/users/", response_model=list[schemas.User])
+@users_router.get("/read", response_model=list[schemas.User])
 def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     users = get_users(db, skip=skip, limit=limit)
     return users
 
 
-@users_router.get("/users/{user_id}", response_model=schemas.User)
+@users_router.get("/read/{user_id}", response_model=schemas.User)
 def read_user(user_id: int, db: Session = Depends(get_db)):
     db_user = get_user(db, user_id=user_id)
     if db_user is None:

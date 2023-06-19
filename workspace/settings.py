@@ -22,18 +22,15 @@ ws_settings = WorkspaceSettings(
     prd_db_enabled=True,
     # -*- AWS settings
     # Region for AWS resources
-    aws_region="us-east-1",
+    aws_region="us-east-2",
     # Availability Zones for AWS resources
-    aws_az1="us-east-1a",
-    aws_az2="us-east-1b",
-    # aws_az3="us-east-1c",
-    # Subnet IDs for AWS resources
-    # subnet_ids=None,
-    # Security Groups for AWS resources
-    # security_groups=None,
+    aws_az1="us-east-2a",
+    aws_az2="us-east-2b",
+    # Subnet IDs in the aws_region
+    # subnet_ids=["subnet-xyz", "subnet-xyz"],
     # -*- Image Settings
     # Repository for images
-    # image_repo="your-repo",
+    # image_repo="[ACCOUNT_ID].dkr.ecr.us-east-2.amazonaws.com",
     # Build images locally
     # build_images=True,
     # Push images after building

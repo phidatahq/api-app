@@ -24,10 +24,6 @@ cloud_sql_proxy
 # ignore virtualenv
 .venv
 venv*
-dpenv*
-mlenv*
-dataenv*
-testenv*
 apienv*
 
 .DS_Store

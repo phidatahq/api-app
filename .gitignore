@@ -30,6 +30,4 @@ dist
 # ignore virtualenvs
 .venv
 venv*
-aienv
-apienv
-.ipynb_checkpoints
+apienv*
