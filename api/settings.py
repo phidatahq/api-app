@@ -77,16 +77,6 @@ class ApiSettings(BaseSettings):
 
         return valid_cors
 
-    @validator("docs_enabled")
-    def validate_docs_enabled(cls, docs_enabled, values):
-        """Disable docs server in production."""
-
-        runtime_env = values.get("runtime_env")
-        if runtime_env == "prd":
-            return False
-
-        return docs_enabled
-
 
 # Create ApiSettings object
 api_settings = ApiSettings()

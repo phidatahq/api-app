@@ -2,7 +2,7 @@
 
 ## Creating database revision using alembic
 
-Run these commands lcoally to create a new database revision.
+Run these commands locally to create a new database revision.
 
 ```bash
 docker exec -it api-dev-container zsh

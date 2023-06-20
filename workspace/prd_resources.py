@@ -157,7 +157,7 @@ prd_fastapi = FastApiServer(
     create_load_balancer=create_load_balancer,
     health_check_path="/v1/ping",
     env={
-        # "RUNTIME_ENV": "prd",
+        "RUNTIME_ENV": "prd",
         # Database configuration
         "DB_HOST": AwsReference(prd_db.get_db_endpoint),
         "DB_PORT": AwsReference(prd_db.get_db_port),
