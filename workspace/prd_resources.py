@@ -157,13 +157,13 @@ prd_fastapi = FastApiServer(
     create_load_balancer=create_load_balancer,
     health_check_path="/v1/ping",
     env={
-        "RUNTIME_ENV": "prd",
+        # "RUNTIME_ENV": "prd",
         # Database configuration
-        "DB_HOST": "",
-        "DB_PORT": prd_db_port,
-        "DB_USER": prd_db.get_master_username(),
-        "DB_PASS": prd_db.get_master_user_password(),
-        "DB_SCHEMA": prd_db.get_db_name(),
+        "DB_HOST": AwsReference(prd_db.get_db_endpoint),
+        "DB_PORT": AwsReference(prd_db.get_db_port),
+        "DB_USER": AwsReference(prd_db.get_master_username),
+        "DB_PASS": AwsReference(prd_db.get_master_user_password),
+        "DB_SCHEMA": AwsReference(prd_db.get_db_name),
         # Create/Upgrade database on startup using alembic
         "UPGRADE_DB": True,
         # Wait for database to be available before starting the server
