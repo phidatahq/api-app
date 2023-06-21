@@ -1,6 +1,6 @@
-## Api App
+## API App
 
-This repo contains the code for running an LLM App in 2 environments:
+This repo contains the code for running an API App in 2 environments:
 
 1. dev: A development env running locally using docker
 2. prd: A production env running on AWS ECS
