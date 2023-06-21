@@ -31,3 +31,5 @@ dist
 .venv
 venv*
 apienv*
+
+.ipynb_checkpoints

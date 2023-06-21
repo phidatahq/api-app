@@ -150,6 +150,7 @@ prd_fastapi = FastApiServer(
     command=["api", "start"],
     ecs_task_cpu="1024",
     ecs_task_memory="2048",
+    ecs_service_count=1,
     aws_subnets=ws_settings.subnet_ids,
     aws_secrets=[prd_api_secret],
     aws_security_groups=[prd_api_sg],

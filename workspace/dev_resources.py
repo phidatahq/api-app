@@ -20,7 +20,7 @@ dev_image = DockerImage(
     skip_docker_cache=ws_settings.skip_image_cache,
 )
 
-# -*- Development Database
+# -*- Development Database running on port 9315
 dev_db = PostgresDb(
     name=f"{ws_settings.dev_key}-db",
     enabled=ws_settings.dev_db_enabled,
