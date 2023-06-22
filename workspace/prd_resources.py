@@ -139,6 +139,8 @@ prd_db = DbInstance(
     # secrets_file=ws_settings.ws_root.joinpath("workspace/secrets/prd_db_secrets.yml"),
     skip_delete=skip_delete,
     save_output=save_output,
+    # Do not wait for the db to be active as the FastApiServer waits for the db to be ready
+    wait_for_creation=False,
 )
 
 # -*- FastApiServer running on ECS
@@ -191,8 +193,8 @@ prd_aws_config = AwsConfig(
     env=ws_settings.prd_env,
     apps=[prd_fastapi],
     resources=AwsResourceGroup(
-        db_subnet_groups=[prd_db_subnet_group],
         db_instances=[prd_db],
+        db_subnet_groups=[prd_db_subnet_group],
         secrets=[prd_api_secret, prd_db_secret],
         security_groups=[prd_lb_sg, prd_api_sg, prd_db_sg],
     ),
